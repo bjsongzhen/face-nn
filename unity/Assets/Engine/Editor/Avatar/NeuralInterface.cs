@@ -157,28 +157,27 @@ namespace XEngine.Editor
             return false;
         }
 
+        struct BlendShapeData
+        {
+            public float[] Values;
+        }
 
         private static void RandomExportModels(int expc, RoleShape shape, string prefix, bool noise, bool complete)
         {
             XEditorUtil.SetupEnv();
             float[] args = new float[CNT];
-            FileStream fs = new FileStream(EXPORT + "db_description", FileMode.OpenOrCreate, FileAccess.Write);
-            BinaryWriter bw = new BinaryWriter(fs);
-            bw.Write(expc);
+
             for (int j = 0; j < expc; j++)
             {
                 string name = string.Format("db_{0:00000}_{1}", j, (int)shape);
-                bw.Write(name);
                 for (int i = 0; i < CNT; i++)
                 {
                     args[i] = UnityEngine.Random.Range(0.0f, 1.0f);
-                    bw.Write(noise ? AddNoise(args[i], i) : args[i]);
                 }
                 float[] args2 = new float[CNT2];
                 int r = UnityEngine.Random.Range(1, 4);
                 args2[r] = 1;
                 args2[0] = UnityEngine.Random.Range(0.0f, 1.0f);
-                for (int i = 0; i < CNT2; i++) bw.Write(args2[i]);
                 NeuralData data = new NeuralData
                 {
                     callback = Capture,
@@ -189,10 +188,26 @@ namespace XEngine.Editor
                 };
                 UnityEditor.EditorUtility.DisplayProgressBar(prefix, string.Format("is generating {0}/{1}", j, expc), (float)j / expc);
                 NeuralInput(data, complete, true);
+
+                float[] values = new float[CNT + CNT2];
+                for(int i = 0; i < CNT; i++)
+                {
+                    values[i] = args[i];
+                }
+                for(int i = 0; i < CNT2; i++)
+                {
+                    values[i+CNT] = args2[i];
+                }
+                var blendShapeData = new BlendShapeData
+                {
+                    Values = values
+                };
+                string jsonData = JsonUtility.ToJson(blendShapeData, true);
+                string path = EXPORT + name + ".json";
+                var bytes = System.Text.Encoding.UTF8.GetBytes(jsonData);
+                File.WriteAllBytes(path, bytes);
             }
             UnityEditor.EditorUtility.DisplayProgressBar(prefix, "post processing, wait for a moment", 1);
-            bw.Close();
-            fs.Close();
             MoveDestDir("db_*", prefix + "_" + shape.ToString().ToLower() + "/");
             UnityEditor.EditorUtility.ClearProgressBar();
         }

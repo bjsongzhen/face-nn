@@ -28,3 +28,4 @@ export/**/*png
 export/**/db_description
 *.DS_Store
 *Animation.meta
+export

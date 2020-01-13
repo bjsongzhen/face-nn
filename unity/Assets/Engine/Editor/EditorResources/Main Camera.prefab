@@ -42,7 +42,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -87,10 +87,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f782d60419e6fd24992cf7a59ce7d1a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnveriomentCubePath: 
   hdrScale: 4.6
   hdrPow: 0.1
   hdrAlpha: 0.5
+  iblLevel: 1
   lightmapShadowMask: 0.25
   shadowIntensity: 1
   lighting:
@@ -100,15 +100,6 @@ MonoBehaviour:
     roleLightInfo1:
       lightDir: {x: 0, y: -0.99999994, z: 0.000000059604645, w: 0}
       lightColor: {r: 0, g: 0, b: 0, a: 1}
-  SkyboxMatPath: 
-  sunDir: {x: 0, y: -1, z: 0}
-  ambient:
-    ambientMode: 3
-    ambientSkyColor: {r: 0, g: 0, b: 0, a: 0}
-    ambientEquatorColor: {r: 0, g: 0, b: 0, a: 0}
-    ambientGroundColor: {r: 0, g: 0, b: 0, a: 0}
-    AmbientMax: 1
-    SkyboxMatPath: 
   shadowDepthBias: -0.03
   shadowNormalBias: 2.5
   shadowSmoothMin: 4
@@ -144,18 +135,17 @@ MonoBehaviour:
     headLength: 0
     ChunkStreamOffset: 
     ChunkInfo: 
+  envCube: {fileID: 0}
+  SkyBoxMat: {fileID: 0}
   lightingFolder: 1
   roleLight0: {fileID: 0}
   roleLight1: {fileID: 0}
   shadowFolder: 1
   shadowMapLevel: 0.25
   shadowBound: 0
-  shadowCasterProxy: {fileID: 0}
   lookTarget: {fileID: 0}
   drawShadowLighing: 0
   debugFolder: 1
-  quadIndex: -1
-  drawType: 0
   showObjects: 0
   debugContext:
     debugMode: 0

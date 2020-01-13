@@ -81,6 +81,8 @@ namespace XEngine.Editor
             cam.transform.position = new Vector3(0, 1, -10);
             Light light = GameObject.Find("Directional Light").GetComponent<Light>();
             light.transform.parent = cam.transform;
+            light.transform.localEulerAngles = new Vector3(40, 0, 0);
+            light.intensity = 0.95f;
             var env = cam.GetComponent<XEngine.Environment>();
             env.roleLight0 = light;
             env.envCube = AssetDatabase.LoadAssetAtPath<Cubemap>("Assets/Engine/Editor/EditorResources/Env_0_CubeLDR.tga");
